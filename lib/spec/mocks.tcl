@@ -13,8 +13,13 @@ namespace eval Spec {
     }
 
     nx::Class create Mocks {
+        :variable superspace:object [::Spec::Mocks::Space new]
+
         :public object method space {} {
-            return [::Spec::Mocks::Space new]
+            if {[info exists :superspace] == 0} {
+                set :superspace [::Spec::Mocks::Space new]
+            }
+            return ${:superspace}
         }
 
         :public object method setup { host_namespace } {
