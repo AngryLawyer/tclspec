@@ -10,7 +10,7 @@ Feature: expect to change
       nx::Class create Counter {
           :class property {count 0}
 
-          :public class method increment {} {
+          :public object method increment {} {
               incr :count
           }
       }

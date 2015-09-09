@@ -3,7 +3,7 @@ namespace eval ::Spec::Mocks::Tcl {
         :property [list proc_doubles [dict create]]
 
         # Make this a singleton
-        :public class method create {args} {
+        :public object method create {args} {
             if { ![info exists :instance] } {
                 set :instance [next]
             }
@@ -15,7 +15,7 @@ namespace eval ::Spec::Mocks::Tcl {
             return ${:instance}
         }
 
-        :public class method stub_call { proc_name -with -and_return {-once:switch false} {-twice:switch false} {-never:switch false} {-any_number_of_times:switch false} -exactly:optional -at_least:optional -at_most:optional {block {}} } {
+        :public object method stub_call { proc_name -with -and_return {-once:switch false} {-twice:switch false} {-never:switch false} {-any_number_of_times:switch false} -exactly:optional -at_least:optional -at_most:optional {block {}} } {
             set expectation [[:new] add_stub $proc_name $block]
 
             if { [info exists with] } {
@@ -57,7 +57,7 @@ namespace eval ::Spec::Mocks::Tcl {
             return $expectation
         }
 
-        :public class method mock_call { proc_name -with -and_return {-once:switch false} {-twice:switch false} {-never:switch false} {-any_number_of_times:switch false} -exactly:optional -at_least:optional -at_most:optional {block {}} } {
+        :public object method mock_call { proc_name -with -and_return {-once:switch false} {-twice:switch false} {-never:switch false} {-any_number_of_times:switch false} -exactly:optional -at_least:optional -at_most:optional {block {}} } {
             set expectation [[:new] add_message_expectation $proc_name $block]
 
             if { [info exists with] } {
@@ -99,7 +99,7 @@ namespace eval ::Spec::Mocks::Tcl {
             return $expectation
         }
 
-        :public class method dont_call { proc_name -with } {
+        :public object method dont_call { proc_name -with } {
             set expectation [[:new] add_negative_message_expectation $proc_name]
 
             if { [info exists with] } {

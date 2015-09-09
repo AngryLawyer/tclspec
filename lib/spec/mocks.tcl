@@ -13,9 +13,11 @@ namespace eval Spec {
     }
 
     nx::Class create Mocks {
-        :class property [list space [::Spec::Mocks::Space new]]
+        :public object method space {} {
+            return [::Spec::Mocks::Space new]
+        }
 
-        :public class method setup { host_namespace } {
+        :public object method setup { host_namespace } {
             namespace eval $host_namespace {
                 namespace import ::Spec::Mocks::ExampleMethods::*
             }
@@ -23,11 +25,11 @@ namespace eval Spec {
             nx::Object require trait ::Spec::Mocks::nx::Methods
         }
 
-        :public class method verify {} {
+        :public object method verify {} {
             [:space] verify_all
         }
 
-        :public class method teardown {} {
+        :public object method teardown {} {
             [:space] reset_all
         }
     }
